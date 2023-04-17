@@ -1744,7 +1744,7 @@ BEGIN
     SELECT 'The value for the parameter @Credential is not supported.', 16, 2
   END
 
-  IF @URL IS NOT NULL AND @Credential IS NULL AND NOT EXISTS(SELECT * FROM sys.credentials WHERE UPPER(credential_identity) = 'SHARED ACCESS SIGNATURE')
+  IF @URL IS NOT NULL AND @URL NOT LIKE 's3://%' AND @Credential IS NULL AND NOT EXISTS(SELECT * FROM sys.credentials WHERE UPPER(credential_identity) = 'SHARED ACCESS SIGNATURE')
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
     SELECT 'The value for the parameter @Credential is not supported.', 16, 3
